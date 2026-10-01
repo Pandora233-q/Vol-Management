@@ -50,6 +50,8 @@
     </dialog>
 
     <button id="statsButton" class="stats-button" onclick="showStats()">📊 时长统计</button>
+    <input type="file" id="importFile" accept=".json" style="display: none;" onchange="handleImport(event)">
+    <button id="importButton" class="import-button" onclick="document.getElementById('importFile').click()">📥 导入数据</button>
         
 </body>
 </html>

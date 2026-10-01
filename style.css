@@ -359,3 +359,34 @@ body {
     border-color: var(--accent);
     color: var(--accent);
 }
+
+.import-button {
+    position: fixed;
+    bottom: 32px;
+    right: 140px;
+    padding: 10px 16px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.import-button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.chart-container {
+    margin-bottom: 24px;
+    padding: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+}
+
+#statsChart {
+    display: block;
+    width: 100%;
+}

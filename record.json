@@ -1,0 +1,59 @@
+[
+  {
+    "name": "张三",
+    "tasks": [
+      {
+        "taskName": "用户认证模块开发",
+        "description": "实现JWT登录和权限验证",
+        "duration": "8h",
+        "status": "done"
+      },
+      {
+        "taskName": "API接口文档编写",
+        "description": "编写RESTful API接口文档",
+        "duration": "3h",
+        "status": "done"
+      }
+    ]
+  },
+  {
+    "name": "李四",
+    "tasks": [
+      {
+        "taskName": "数据库设计优化",
+        "description": "优化用户表索引和查询性能",
+        "duration": "5h",
+        "status": "doing"
+      },
+      {
+        "taskName": "前端组件开发",
+        "description": "开发任务卡片和统计面板组件",
+        "duration": "6h",
+        "status": "done"
+      }
+    ]
+  },
+  {
+    "name": "王五",
+    "tasks": [
+      {
+        "taskName": "单元测试编写",
+        "description": "为核心业务逻辑编写单元测试",
+        "duration": "4h",
+        "status": "doing"
+      },
+      {
+        "taskName": "代码审查",
+        "description": "审查团队成员提交的代码",
+        "duration": "2h",
+        "status": "done"
+      },
+      {
+        "taskName": "部署脚本编写",
+        "description": "编写自动化部署和CI/CD脚本",
+        "duration": "3h",
+        "status": "todo"
+      }
+    ]
+  }
+]

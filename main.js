@@ -168,7 +168,8 @@ function showStats() {
     if (Object.keys(stats).length === 0) {
         content.innerHTML = '<div class="no-stats">暂无志愿时长记录</div>';
     } else {
-        let html = '<div class="stats-list">';
+        let html = '<div class="chart-container"><canvas id="statsChart"></canvas></div>';
+        html += '<div class="stats-list">';
         Object.entries(stats).forEach(([owner, data]) => {
             html += `<div class="stats-card">
                 <div class="stats-header">
@@ -186,13 +187,135 @@ function showStats() {
         });
         html += '</div>';
         content.innerHTML = html;
+
+        setTimeout(() => renderChart(stats), 100);
     }
 
     document.getElementById('statsDialog').showModal();
 }
 
+function renderChart(stats) {
+    const canvas = document.getElementById('statsChart');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+
+    canvas.width = rect.width * dpr;
+    canvas.height = 300 * dpr;
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = '300px';
+    ctx.scale(dpr, dpr);
+
+    const width = rect.width;
+    const height = 300;
+    const padding = 60;
+    const chartHeight = height - padding * 2;
+
+    const owners = Object.keys(stats);
+    const values = owners.map(owner => stats[owner].total);
+    const maxValue = Math.max(...values);
+
+    const barWidth = (width - padding * 2) / owners.length * 0.6;
+    const gap = (width - padding * 2) / owners.length;
+
+    ctx.fillStyle = '#fafaf9';
+    ctx.fillRect(0, 0, width, height);
+
+    ctx.strokeStyle = '#e7e5e4';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(padding, padding);
+    ctx.lineTo(padding, height - padding);
+    ctx.lineTo(width - padding, height - padding);
+    ctx.stroke();
+
+    const gridLines = 5;
+    ctx.strokeStyle = '#f5f5f4';
+    ctx.lineWidth = 1;
+    for (let i = 0; i <= gridLines; i++) {
+        const y = padding + (chartHeight / gridLines) * i;
+        ctx.beginPath();
+        ctx.moveTo(padding, y);
+        ctx.lineTo(width - padding, y);
+        ctx.stroke();
+
+        const value = maxValue - (maxValue / gridLines) * i;
+        ctx.fillStyle = '#a8a29e';
+        ctx.font = '11px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto';
+        ctx.textAlign = 'right';
+        ctx.fillText(value.toFixed(1) + 'h', padding - 10, y + 4);
+    }
+
+    owners.forEach((owner, index) => {
+        const value = values[index];
+        const barHeight = (value / maxValue) * chartHeight;
+        const x = padding + gap * index + (gap - barWidth) / 2;
+        const y = height - padding - barHeight;
+
+        ctx.fillStyle = '#0a0a0a';
+        ctx.fillRect(x, y, barWidth, barHeight);
+
+        ctx.fillStyle = '#1c1917';
+        ctx.font = '12px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto';
+        ctx.textAlign = 'center';
+        ctx.fillText(owner, x + barWidth / 2, height - padding + 20);
+
+        ctx.fillStyle = '#57534e';
+        ctx.font = '11px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto';
+        ctx.fillText(value + 'h', x + barWidth / 2, y - 8);
+    });
+}
+
 function closeStatsDialog() {
     document.getElementById('statsDialog').close();
+}
+
+function handleImport(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const records = JSON.parse(e.target.result);
+            importRecords(records);
+            event.target.value = '';
+        } catch (error) {
+            alert('JSON格式错误，请检查文件格式');
+        }
+    };
+    reader.readAsText(file);
+}
+
+function importRecords(records) {
+    let importCount = 0;
+
+    records.forEach(person => {
+        if (person.name && person.tasks && Array.isArray(person.tasks)) {
+            person.tasks.forEach(task => {
+                const newTask = {
+                    name: task.taskName || '未命名任务',
+                    desc: task.description || '',
+                    duration: task.duration || '0h',
+                    status: task.status || 'todo',
+                    owner: person.name
+                };
+                tasks.push(newTask);
+                importCount++;
+            });
+        }
+    });
+
+    if (importCount > 0) {
+        saveTasks();
+        refreshTasks();
+        alert(`成功导入 ${importCount} 条任务记录`);
+        showStats();
+    } else {
+        alert('未找到有效的任务记录');
+    }
 }
 
 window.onload = loadTasks;
