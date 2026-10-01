@@ -12,6 +12,7 @@ function loadTasks() {
 }
 
 function saveTasks() {
+    // localStorage.removeItem('tasks');
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
