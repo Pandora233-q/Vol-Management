@@ -1,24 +1,46 @@
+:root {
+    --surface-1: #0A0D12;
+    --surface-2: #0F131C;
+    --surface-3: #161D2B;
+    --surface-4: #1E2636;
+    --accent: #ffa28d;
+    --accent-muted: #ffc2b0;
+    --text-primary: #2b2b2b;
+    --text-secondary: #8a8078;
+    --radius-full: 999px;
+    --radius-lg: 18px;
+    --radius-md: 12px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: #fdf8f5;
+    min-height: 100vh;
+}
+
 .task-board {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
     padding: 40px;
-    background: #fdf8f5;
     min-height: 100vh;
 }
 
 .task-card {
     position: relative;
     padding: 24px 24px 20px;
-    border-radius: 18px;
+    border-radius: var(--radius-lg);
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 162, 141, 0.25);
-    box-shadow:
-        0 1px 2px rgba(255, 162, 141, 0.08),
-        0 8px 24px rgba(255, 162, 141, 0.12);
-    transition: transform .35s cubic-bezier(.22, 1, .36, 1),
-                box-shadow .35s ease;
+    box-shadow: 0 1px 2px rgba(255, 162, 141, 0.08), 0 8px 24px rgba(255, 162, 141, 0.12);
+    transition: transform .35s cubic-bezier(.22, 1, .36, 1), box-shadow .35s ease;
     overflow: hidden;
     cursor: pointer;
 }
@@ -28,7 +50,7 @@
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 4px;
-    background: linear-gradient(90deg, #ffa28d, #ffc2b0, #ffa28d);
+    background: linear-gradient(90deg, var(--accent), var(--accent-muted), var(--accent));
     background-size: 200% 100%;
     animation: shimmer 3s linear infinite;
 }
@@ -39,9 +61,7 @@
 
 .task-card:hover {
     transform: translateY(-6px);
-    box-shadow:
-        0 2px 4px rgba(255, 162, 141, 0.1),
-        0 16px 40px rgba(255, 162, 141, 0.22);
+    box-shadow: 0 2px 4px rgba(255, 162, 141, 0.1), 0 16px 40px rgba(255, 162, 141, 0.22);
 }
 
 .task-card::after {
@@ -57,32 +77,36 @@
 .task-name {
     font-size: 17px;
     font-weight: 600;
-    color: #2b2b2b;
+    color: var(--text-primary);
     letter-spacing: 0.5px;
     margin-bottom: 8px;
 }
 
 .task-button {
-    background-color: #ffc2b0;
-    border-radius: 10px;
+    background-color: var(--accent-muted);
+    border-radius: var(--radius-md);
     box-shadow: 0 2px 4px rgba(255, 162, 141, 0.1);
     border: none;
     color: #e8725a;
-    font:  64px "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 64px;
+    font-weight: 300;
     transition: all .25s ease;
+    cursor: pointer;
+    min-height: 120px;
 }
 
 .task-button:hover {
-    background-color: #ffa28d;
+    background-color: var(--accent);
     color: #fff;
+    transform: scale(1.05);
 }
 
 .task-desc {
     font-size: 13px;
     line-height: 1.7;
-    color: #8a8078;
+    color: var(--text-secondary);
     display: -webkit-box;
-    line-clamp: 2;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     margin-bottom: 16px;
@@ -103,22 +127,25 @@
     color: #e8725a;
     background: rgba(255, 162, 141, 0.14);
     padding: 5px 12px;
-    border-radius: 999px;
+    border-radius: var(--radius-full);
 }
 
-.task-duration svg { width: 13px; height: 13px; }
+.task-duration svg {
+    width: 13px;
+    height: 13px;
+}
 
 .task-status {
     font-size: 12px;
     font-weight: 500;
     padding: 5px 12px;
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     letter-spacing: 0.5px;
 }
 
 .status-todo   { color:#9a9088; background:#f1ede9; }
 .status-doing  { color:#e8725a; background:rgba(255,162,141,.18); }
-.status-done   { color:#fff;    background:linear-gradient(135deg,#ffa28d,#ff8a6e); }
+.status-done   { color:#fff; background:linear-gradient(135deg,#ffa28d,#ff8a6e); }
 
 .has-tooltip {
     position: relative;
@@ -135,8 +162,8 @@
     font-weight: 500;
     white-space: nowrap;
     color: #fff;
-    background: linear-gradient(135deg, #ffa28d, #ff8a6e);
-    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), #ff8a6e);
+    border-radius: var(--radius-md);
     box-shadow: 0 6px 20px rgba(255, 138, 110, 0.35);
     opacity: 0;
     pointer-events: none;
@@ -164,4 +191,196 @@
 
 .has-tooltip:hover::before {
     opacity: 1;
+}
+
+.task-dialog {
+    border: none;
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    min-width: 480px;
+    max-width: 600px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    background: #fff;
+}
+
+.task-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+}
+
+.task-dialog h2 {
+    margin-bottom: 24px;
+    color: var(--text-primary);
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.task-dialog label {
+    display: block;
+    margin-top: 16px;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.task-dialog input,
+.task-dialog textarea,
+.task-dialog select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid rgba(255, 162, 141, 0.3);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color .2s ease;
+}
+
+.task-dialog input:focus,
+.task-dialog textarea:focus,
+.task-dialog select:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.task-dialog textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.dialog-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    justify-content: flex-end;
+}
+
+.task-dialog button {
+    padding: 10px 24px;
+    border: none;
+    border-radius: var(--radius-full);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.task-dialog button:first-child {
+    background: linear-gradient(135deg, var(--accent), #ff8a6e);
+    color: #fff;
+}
+
+.task-dialog button:first-child:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 138, 110, 0.35);
+}
+
+.task-dialog button:not(:first-child) {
+    background: #f1ede9;
+    color: var(--text-secondary);
+}
+
+.task-dialog button:not(:first-child):hover {
+    background: #e5dfd8;
+}
+
+.detail-dialog .detail-row {
+    padding: 12px 0;
+    border-bottom: 1px solid #f1ede9;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.detail-dialog .detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-dialog .detail-row strong {
+    color: var(--text-primary);
+    margin-right: 8px;
+}
+
+.stats-dialog {
+    min-width: 560px;
+}
+
+.stats-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.stats-card {
+    background: #fdf8f5;
+    border-radius: var(--radius-md);
+    padding: 20px;
+    border: 1px solid rgba(255, 162, 141, 0.2);
+}
+
+.stats-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid rgba(255, 162, 141, 0.3);
+}
+
+.stats-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.stats-total {
+    font-size: 20px;
+    font-weight: 700;
+    color: #e8725a;
+}
+
+.stats-tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.stats-task-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 6px 0;
+}
+
+.stats-duration {
+    font-weight: 600;
+    color: #e8725a;
+}
+
+.no-stats {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.stats-button {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    padding: 14px 28px;
+    border: none;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, var(--accent), #ff8a6e);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(255, 138, 110, 0.4);
+    transition: all .3s ease;
+}
+
+.stats-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(255, 138, 110, 0.5);
 }

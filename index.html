@@ -8,26 +8,48 @@
     <script src="main.js"></script>
 </head>
 <body>
-    
     <div class="task-board" id="taskBoard">
-        <button id="addTaskButton" class="task-button" onclick="add_task_dialog()">+</button>
+        <button id="addTaskButton" class="task-button" onclick="openAddDialog()">+</button>
     </div>
     <dialog id="addTaskDialog" class="task-dialog">
-        
+        <h2 id="dialogTitle">添加任务</h2>
         <label for="taskName">任务名称:</label>
         <input type="text" id="taskName" name="taskName" required>
         <label for="taskDescription">任务描述:</label>
         <textarea id="taskDescription" name="taskDescription" required></textarea>
         <label for="taskDuration">任务时长:</label>
-        <input type="text" id="taskDuration" name="taskDuration" required>
-        
-        <input type="text" id="volunteerName" name="volunteerName">
-        <button type="button" onclick="submit()">添加任务</button>
-        <button type="button" onclick="CancelModal()">取消</button>
+        <input type="text" id="taskDuration" name="taskDuration" required placeholder="例如: 2h">
+        <label for="taskStatus">任务状态:</label>
+        <select id="taskStatus" name="taskStatus">
+            <option value="todo">待办</option>
+            <option value="doing">进行中</option>
+            <option value="done">已完成</option>
+        </select>
+        <label for="volunteerName">认领人:</label>
+        <input type="text" id="volunteerName" name="volunteerName" placeholder="进行中或已完成时填写">
+        <div class="dialog-buttons">
+            <button type="button" onclick="submitTask()">保存</button>
+            <button type="button" onclick="cancelDialog()">取消</button>
+        </div>
+    </dialog>
+
+    <dialog id="detailDialog" class="task-dialog detail-dialog">
+        <h2>任务详情</h2>
+        <div id="detailContent"></div>
+        <div class="dialog-buttons">
+            <button type="button" onclick="editTaskFromDetail()">编辑</button>
+            <button type="button" onclick="deleteTaskFromDetail()">删除</button>
+            <button type="button" onclick="closeDetailDialog()">关闭</button>
+        </div>
+    </dialog>
+
+    <dialog id="statsDialog" class="task-dialog stats-dialog">
+        <h2>志愿时长统计</h2>
+        <div id="statsContent"></div>
+        <button type="button" onclick="closeStatsDialog()">关闭</button>
+    </dialog>
+
+    <button id="statsButton" class="stats-button" onclick="showStats()">📊 时长统计</button>
         
 </body>
-<script>
-    add_task("任务1", "这是任务1的描述", "2h", "todo");
-    add_task("任务2", "这是任务2的描述", "3h", "doing", "张三");
-</script>
 </html>
