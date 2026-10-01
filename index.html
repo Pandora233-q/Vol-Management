@@ -8,7 +8,23 @@
     <script src="main.js"></script>
 </head>
 <body>
-    <div class="task-board" id="taskBoard"></div>
+    
+    <div class="task-board" id="taskBoard">
+        <button id="addTaskButton" class="task-button" onclick="add_task_dialog()">+</button>
+    </div>
+    <dialog id="addTaskDialog" class="task-dialog">
+        
+        <label for="taskName">任务名称:</label>
+        <input type="text" id="taskName" name="taskName" required>
+        <label for="taskDescription">任务描述:</label>
+        <textarea id="taskDescription" name="taskDescription" required></textarea>
+        <label for="taskDuration">任务时长:</label>
+        <input type="text" id="taskDuration" name="taskDuration" required>
+        
+        <input type="text" id="volunteerName" name="volunteerName">
+        <button type="button" onclick="submit()">添加任务</button>
+        <button type="button" onclick="CancelModal()">取消</button>
+        
 </body>
 <script>
     add_task("任务1", "这是任务1的描述", "2h", "todo");

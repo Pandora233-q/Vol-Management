@@ -1,3 +1,35 @@
+function add_task_dialog() {
+    const dialog = document.querySelector("#addTaskDialog");
+    dialog.showModal();
+}
+
+function CancelModal() {
+    dialog.close();
+}
+
+function submit(event) { 
+    
+    
+    var name = document.getElementById("taskName").value;
+    var desc = document.getElementById("taskDesc").value;
+    var duration = document.getElementById("taskDuration").value;
+    // var status = document.getElementById("taskStatus").value;
+    // var owner = document.getElementById("taskOwner").value;
+    // if (name && desc && duration ) {
+        
+    //     console.log(name, desc, duration);
+        
+    // }
+    add_task(name, desc, duration, "todo"); 
+    
+    
+
+    dialog.close();
+    
+    document.getElementById("taskName").value = "";
+
+}
+
 function add_task(name, desc, duration, status, owner) {
     var task = document.createElement("div");
     task.className = "task-card";

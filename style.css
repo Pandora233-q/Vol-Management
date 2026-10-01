@@ -62,6 +62,21 @@
     margin-bottom: 8px;
 }
 
+.task-button {
+    background-color: #ffc2b0;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(255, 162, 141, 0.1);
+    border: none;
+    color: #e8725a;
+    font:  64px "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    transition: all .25s ease;
+}
+
+.task-button:hover {
+    background-color: #ffa28d;
+    color: #fff;
+}
+
 .task-desc {
     font-size: 13px;
     line-height: 1.7;
