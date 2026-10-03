@@ -303,8 +303,10 @@ function importRecords(records) {
                     status: task.status || 'todo',
                     owner: person.name
                 };
+                // if (!tasks.includes(newTask)) {
                 tasks.push(newTask);
                 importCount++;
+            // }
             });
         }
     });
