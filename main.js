@@ -1,6 +1,18 @@
 let tasks = [];
 let currentEditIndex = -1;
 
+// function handleExport(event) { 
+//     const blob = new Blob([JSON.stringify(tasks)], { type: 'application/json' });
+//     const url = URL.createObjectURL(blob);
+//     const a = document.createElement('a');
+//     a.href = url;
+//     const filename = `tasks_${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
+//     a.download = filename;
+//     a.click();
+//     URL.revokeObjectURL(url);
+//     event.preventDefault();
+//     return false;
+// }
 function loadTasks() {
     const saved = localStorage.getItem('tasks');
     if (saved) {
